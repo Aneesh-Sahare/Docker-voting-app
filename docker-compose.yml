@@ -1,19 +1,56 @@
-version: "3"
 services:
-  redis:
-    image: redis
-  db:
-    image: postgres:9.4
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
   vote:
-    image: voting-app
+    image: dockersamples/examplevotingapp_vote
+    depends_on:
+      - redis
+      - db
+  
     ports:
-      - 5000:80
-  worker:
-    image: worker-app
+      - "8080:80"
+    networks:
+      - front-tier
+      - back-tier
+
   result:
-    image: result-app
+    image: dockersamples/examplevotingapp_result
+    depends_on:
+      - redis
+        
     ports:
-      - 5001:80
+      - "8081:80"
+    networks:
+      - front-tier
+      - back-tier
+
+  worker:
+    image: dockersamples/examplevotingapp_worker
+    depends_on:
+      - redis
+      - db
+
+    networks:
+      - back-tier
+
+  redis:
+    image: redis:alpine
+  
+    networks:
+      - back-tier
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+
+    networks:
+      - back-tier
+
+volumes:
+  db-data:
+
+networks:
+  front-tier:
+  back-tier:
