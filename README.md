@@ -3,11 +3,11 @@
 
 
 The voting application is composed of several distinct components:
-/n
-Voting App: A Python-based web application built with Flask, where users cast their votes.
-/n
-Redis: A messaging system that collects the submitted votes.
-/n
-Worker: A .NET application (with a Java-like code sample preserved) that processes votes and updates a PostgreSQL database.
-/n
-Result App: A Node.js and Express application that retrieves and displays voting results from the database.
+
+-Voting App: A Python-based web application built with Flask, where users cast their votes.
+
+-Redis: A messaging system that collects the submitted votes.
+
+-Worker: A .NET application (with a Java-like code sample preserved) that processes votes and updates a PostgreSQL database.
+
+-Result App: A Node.js and Express application that retrieves and displays voting results from the database.
